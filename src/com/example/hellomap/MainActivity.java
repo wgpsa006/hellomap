@@ -47,14 +47,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class	 MainActivity extends Activity { 
     /** Called when the activity is first created. */
-
+	private TextView textView;
     private Button button01;
     private Button button02;
+    private Button button03;
     private SeekBar seekBar;
     private EditText searchlocation;
     public static String coords;
@@ -69,7 +71,10 @@ public class	 MainActivity extends Activity {
 
         button01 = (Button)findViewById(R.id.Button01);
         button02 = (Button)findViewById(R.id.Button02);
+        button03 = (Button)findViewById(R.id.Button03);
         
+        
+        textView = (TextView)findViewById(R.id.textView1);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
 
         seekBar.setMax(21);//设置最大刻度
@@ -80,8 +85,13 @@ public class	 MainActivity extends Activity {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
 
-           Log.v("onProgressChanged()", String.valueOf(progress) + ", " + String.valueOf(fromTouch));
-           }
+        	if (fromTouch)
+            {
+        			//mCurrentValue = value + mMinValue;
+                textView.setText(Integer.toString(progress));
+            }
+        	
+        }
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {	//begin 拖
@@ -133,6 +143,17 @@ public class	 MainActivity extends Activity {
     					Toast.LENGTH_SHORT).show();
             }         
         });
+        
+        button03.setOnClickListener(new Button.OnClickListener(){ 
+            @Override
+            public void onClick(View v) {
+            	
+            	Intent intent = new Intent();
+    	   		intent.setClass(MainActivity.this, ListView1.class);
+    	   		startActivity(intent);
+            }         
+        });
+        
     }
     
     private class GeocoderTask extends AsyncTask<String, Void, List<Address>>{

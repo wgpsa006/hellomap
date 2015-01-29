@@ -43,8 +43,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
-
+import android.view.animation.AnimationUtils;
 
 
 public class test extends Activity implements OnInfoWindowClickListener{ 
@@ -62,17 +67,24 @@ public class test extends Activity implements OnInfoWindowClickListener{
 	private GoogleMap map;
 	private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
     /** Called when the activity is first created. */
-
+	private Animation animShow, animHide;
+	private SlidingPanel popup;
+	//show house price
+	private Button button;
+	
     @Override
 
     public void onCreate(Bundle savedInstanceState) {
     		//readTxt();
-    		System.out.println("--------------------------");
         super.onCreate(savedInstanceState);
         
         setContentView(R.layout.activity_main);
-        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
         
+        map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        popup = (SlidingPanel) findViewById(R.id.popup_window);
+        // Hide the popup initially.....
+    		popup.setVisibility(View.GONE);
+    	
         Bundle bundle = this.getIntent().getExtras(); 
         int zoom = bundle.getInt("Zoom"); 
         
@@ -88,19 +100,19 @@ public class test extends Activity implements OnInfoWindowClickListener{
 	    final LatLng test2 = new LatLng(24.994737, 121.573617);
 	    final LatLng School = new LatLng(24.993737, 121.572517);
 	    
-        Marker nkut = map.addMarker(new MarkerOptions().position(NKUT).title("§jæ«").snippet("º∆¶Ï®t"));
+        Marker nkut = map.addMarker(new MarkerOptions().position(NKUT).title("Â§ßÂ≠∏").snippet("Êï∏‰ΩçÁ≥ª"));
       
-        Marker nccu2 = map.addMarker(new MarkerOptions().position(NCCU2).title("§jæ«").snippet("up").icon(BitmapDescriptorFactory.fromResource(R.drawable.up)));
-        Marker nccu3 = map.addMarker(new MarkerOptions().position(NCCU3).title("§jæ«").snippet("stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.stop)));
-        Marker school = map.addMarker(new MarkerOptions().position(School).title("§jæ«").snippet("stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.school)));
+        Marker nccu2 = map.addMarker(new MarkerOptions().position(NCCU2).title("Â§ßÂ≠∏").snippet("up").icon(BitmapDescriptorFactory.fromResource(R.drawable.up)));
+        Marker nccu3 = map.addMarker(new MarkerOptions().position(NCCU3).title("Â§ßÂ≠∏").snippet("stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.stop)));
+        Marker school = map.addMarker(new MarkerOptions().position(School).title("Â§ßÂ≠∏").snippet("stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.school)));
         Marker map1 = map.addMarker(new MarkerOptions()
         					 .position(test2)
-        					 .title("§jæ«")
+        					 .title("Â§ßÂ≠∏")
         					 .snippet("star")
         					 .draggable(true)
         					 .icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest)));
          */
-	    Marker nccu = map.addMarker(new MarkerOptions().position(NCCU).title("¨F™v§jæ«").icon(BitmapDescriptorFactory.fromResource(R.drawable.green)));
+	    Marker nccu = map.addMarker(new MarkerOptions().position(NCCU).title("ÊîøÊ≤ªÂ§ßÂ≠∏").icon(BitmapDescriptorFactory.fromResource(R.drawable.green)));
 	    map.moveCamera(CameraUpdateFactory.newLatLngZoom(NCCU, zoom));
 	    
 	    if(searchlocation != null)
@@ -123,12 +135,12 @@ public class test extends Activity implements OnInfoWindowClickListener{
 		String result = "";
 		File file = new File(path);
 		try {
-			//≈™¿…
+			//ËÆÄÊ™î
 			FileReader fReader = new FileReader(file);
 			BufferedReader bReader = new BufferedReader(fReader, 99999);
 			StringBuilder sb = new StringBuilder();
 			String line = null;
-			// §@¶Ê¶Ê≈™
+			// ‰∏ÄË°åË°åËÆÄ
 			while ((line = bReader.readLine()) != null) {
 				sb.append(line);
 			}
@@ -157,12 +169,100 @@ public class test extends Activity implements OnInfoWindowClickListener{
 					String price = c.getString(TAG_price);
 					String area = c.getString(TAG_area);
 					String url = c.getString(TAG_url);
-					String total = price_per_square_meters +'\n'+ product_type + price + area + url;
-		        		mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
-		        						.title(address)
-		        						.snippet(total)
-		        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest))));
-					//Log.i("hanjord debug", "test"+ver+" "+name+" "+api);
+					String total = "price_per_square_meters:"+price_per_square_meters +'\n'+ "product_type: "+product_type +"price: "+ price + "area: "+area +"url: "+url;
+					if(address.contains("ÂåóÊäïÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest1))));
+					}
+					else if(address.contains("‰∏≠Ê≠£ÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest2))));
+					}
+					else if(address.contains("Â§ßÂêåÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest3))));
+					}
+					else if(address.contains("‰∏≠Â±±ÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest4))));
+					}
+					else if(address.contains("ÊùæÂ±±ÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest5))));
+					}
+					else if(address.contains("Â§ßÂÆâÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest6))));
+					}
+					else if(address.contains("Ëê¨ËèØÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest7))));
+					}
+					else if(address.contains("‰ø°Áæ©ÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest8))));
+					}
+					else if(address.contains("Â£´ÊûóÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest9))));
+					}
+					else if(address.contains("ÂåóÊäïÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest10))));
+					}
+					else if(address.contains("ÂÖßÊπñÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest11))));
+					}
+					else if(address.contains("ÂçóÊ∏ØÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest12))));
+					}
+					else if(address.contains("ÊñáÂ±±ÂçÄ"))
+					{
+						mMarkerRainbow.add(map.addMarker(new MarkerOptions().position(new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)))
+        						.title(address)
+        						.snippet(total)
+        						.icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest))));
+					}
+					
+					Log.i("hanjord debug", "address  :"+ address);
 					
 					// Adding value HashMap key => value
 				}
@@ -170,7 +270,7 @@ public class test extends Activity implements OnInfoWindowClickListener{
 				e.printStackTrace();
 			}
 
-			// ∂∑ß@≥B≤z
+			// È†à‰ΩúËôïÁêÜ
 			Toast.makeText(getBaseContext(), "Successfully loaded",
 					Toast.LENGTH_SHORT).show();
 
@@ -178,33 +278,59 @@ public class test extends Activity implements OnInfoWindowClickListener{
 			e.printStackTrace();
 		}
 		
+		//initPopup();
         
     }
-    
     @Override
     public void onInfoWindowClick(Marker marker) {
         //Toast.makeText(this, "Click Info Window", Toast.LENGTH_SHORT).show();
-    		Intent intent = new Intent();
-   		intent.setClass(test.this,Readdata.class);    
-   		
-   		String id = marker.getId();
-   		String address = marker.getTitle();
-   		String position = marker.getPosition().toString();
-   		String total = marker.getSnippet();
-   		
-   		//new§@≠”Bundle™´•Û°A®√±N≠n∂«ªº™∫∏ÍÆ∆∂«§J
-   		Bundle bundle = new Bundle();
-   		//bundle.putDouble("height",height );
-   		bundle.putString("id", id);
-   		bundle.putString("address", address);
-   		bundle.putString("position", position);
-   		bundle.putString("total", total);
-   		
-   		//±NBundle™´•Ûassignµπintent
-   		intent.putExtras(bundle);
-
-   		//§¡¥´Activity
-   		startActivity(intent);
-   		//test.this.finish(); 
+//    		Intent intent = new Intent();
+//   		intent.setClass(test.this,Readdata.class);    
+//   		
+//   		String id = marker.getId();
+//   		String address = marker.getTitle();
+//   		String position = marker.getPosition().toString();
+//   		String total = marker.getSnippet();
+//   		
+//   		//new‰∏ÄÂÄãBundleÁâ©‰ª∂Ôºå‰∏¶Â∞áË¶ÅÂÇ≥ÈÅûÁöÑË≥áÊñôÂÇ≥ÂÖ•
+//   		Bundle bundle = new Bundle();
+//   		//bundle.putDouble("height",height );
+//   		bundle.putString("id", id);
+//   		bundle.putString("address", address);
+//   		bundle.putString("position", position);
+//   		bundle.putString("total", total);
+//   		
+//   		//Â∞áBundleÁâ©‰ª∂assignÁµ¶intent
+//   		intent.putExtras(bundle);
+//
+//   		//ÂàáÊèõActivity
+//   		startActivity(intent);
+   		//test.this.finish();    
+    	animShow = AnimationUtils.loadAnimation( this, R.anim.popup_show);
+    	animHide = AnimationUtils.loadAnimation( this, R.anim.popup_hide);
+    	button = (Button)findViewById(R.id.button);
+    	final ImageButton   hideButton = (ImageButton) findViewById(R.id.hide_popup_button);
+    	popup.setVisibility(View.VISIBLE);
+	popup.startAnimation( animShow );
+	
+	final TextView locationName = (TextView) findViewById(R.id.site_name);
+//  final TextView locationDescription = (TextView) findViewById(R.id.site_description);
+	
+  		locationName.setText(marker.getPosition().toString()+'\n'+marker.getSnippet());
+    	//android:duration="750" time in show animal R.anim.popup_show        
+        hideButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				popup.startAnimation( animHide );
+				popup.setVisibility(View.GONE);
+        }});
+        
+        button.setOnClickListener(new Button.OnClickListener(){ 
+            @Override
+            public void onClick(View v) {
+            	Intent intent = new Intent();
+    	   		intent.setClass(test.this, ListView2.class);
+    	   		startActivity(intent);
+            }         
+        });
     }
 }

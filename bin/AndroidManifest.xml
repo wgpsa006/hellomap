@@ -50,6 +50,8 @@
            <activity android:name="Download"></activity>
            <activity android:name="test"></activity>
            <activity android:name="Readdata"></activity>
+           <activity android:name="ListView1"></activity>
+           <activity android:name="ListView2"></activity>
     </application>
 
 </manifest>
