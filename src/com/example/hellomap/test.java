@@ -67,6 +67,7 @@ public class test extends Activity implements OnInfoWindowClickListener{
 	private GoogleMap map;
 	private final List<Marker> mMarkerRainbow = new ArrayList<Marker>();
     /** Called when the activity is first created. */
+	// for 彈跳視窗
 	private Animation animShow, animHide;
 	private SlidingPanel popup;
 	//show house price
@@ -81,13 +82,15 @@ public class test extends Activity implements OnInfoWindowClickListener{
         setContentView(R.layout.activity_main);
         
         map = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+        // define pop panel
         popup = (SlidingPanel) findViewById(R.id.popup_window);
         // Hide the popup initially.....
     		popup.setVisibility(View.GONE);
-    	
+    		
         Bundle bundle = this.getIntent().getExtras(); 
         int zoom = bundle.getInt("Zoom"); 
         
+        // get location from user's input
         String searchlocation = MainActivity.coords;
         Log.i("XXXXXXXXXXXXXX", "lo :"+ searchlocation);
         
