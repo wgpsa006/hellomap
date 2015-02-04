@@ -52,6 +52,18 @@
            <activity android:name="Readdata"></activity>
            <activity android:name="ListView1"></activity>
            <activity android:name="ListView2"></activity>
+           <activity android:name="zhongzheng"></activity>
+           <activity android:name="datong"></activity>
+           <activity android:name="zhongshan"></activity>
+           <activity android:name="songshan"></activity>
+           <activity android:name="daan"></activity>
+           <activity android:name="wanhua"></activity>
+           <activity android:name="xinyi"></activity>
+           <activity android:name="shihlin"></activity>
+           <activity android:name="beitou"></activity>
+           <activity android:name="neihu"></activity>
+           <activity android:name="southzone"></activity>
+           <activity android:name="wenmountain"></activity>
     </application>
 
 </manifest>

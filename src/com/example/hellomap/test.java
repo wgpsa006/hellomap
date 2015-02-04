@@ -94,46 +94,28 @@ public class test extends Activity implements OnInfoWindowClickListener{
         String searchlocation = MainActivity.coords;
         Log.i("XXXXXXXXXXXXXX", "lo :"+ searchlocation);
         
-	    final LatLng NCCU = new LatLng(24.986233,121.575843);
-	    
-	    /*
-	    final LatLng NKUT = new LatLng(24.990617, 121.573608);
-	    final LatLng NCCU2 = new LatLng(24.992427, 121.573607);
-	    final LatLng NCCU3 = new LatLng(24.993337, 121.573607);
-	    final LatLng test2 = new LatLng(24.994737, 121.573617);
-	    final LatLng School = new LatLng(24.993737, 121.572517);
-	    
-        Marker nkut = map.addMarker(new MarkerOptions().position(NKUT).title("大學").snippet("數位系"));
-      
-        Marker nccu2 = map.addMarker(new MarkerOptions().position(NCCU2).title("大學").snippet("up").icon(BitmapDescriptorFactory.fromResource(R.drawable.up)));
-        Marker nccu3 = map.addMarker(new MarkerOptions().position(NCCU3).title("大學").snippet("stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.stop)));
-        Marker school = map.addMarker(new MarkerOptions().position(School).title("大學").snippet("stop").icon(BitmapDescriptorFactory.fromResource(R.drawable.school)));
-        Marker map1 = map.addMarker(new MarkerOptions()
-        					 .position(test2)
-        					 .title("大學")
-        					 .snippet("star")
-        					 .draggable(true)
-        					 .icon(BitmapDescriptorFactory.fromResource(R.drawable.hometest)));
-         */
+	    final LatLng NCCU = new LatLng(24.986233,121.575843);	    
 	    Marker nccu = map.addMarker(new MarkerOptions().position(NCCU).title("政治大學").icon(BitmapDescriptorFactory.fromResource(R.drawable.green)));
 	    map.moveCamera(CameraUpdateFactory.newLatLngZoom(NCCU, zoom));
-	    
+
+	    // listen click on dialog info
+        map.setOnInfoWindowClickListener(this);
+        
 	    if(searchlocation != null)
         {
+	    		// searchlocation = (Longitude,Latitude)
         		String[] names = searchlocation.split(",");
         		Double Longitude = Double.parseDouble(names[0]);
         		Double Latitude = Double.parseDouble(names[1]);
         		//Log.i("XXXXXXXXXXXXXX", "lo :"+ Longitude);
         		//Log.i("hanjord debug", "location2 :"+ Latitude);
-        		
         		final LatLng findlocation = new LatLng(Longitude, Latitude);
-
+        		
         		// Move the camera instantly with a zoom of 16.
         		map.moveCamera(CameraUpdateFactory.newLatLngZoom(findlocation, zoom));
         }
-	   
-        map.setOnInfoWindowClickListener(this);
-        
+	    
+	    // find path from moblie
         String path = getPreferences(MODE_PRIVATE).getString("fpath","/sdcard/winhex.txt");
 		String result = "";
 		File file = new File(path);
@@ -285,7 +267,7 @@ public class test extends Activity implements OnInfoWindowClickListener{
         
     }
     @Override
-    public void onInfoWindowClick(Marker marker) {
+    public void onInfoWindowClick(final Marker marker) {
         //Toast.makeText(this, "Click Info Window", Toast.LENGTH_SHORT).show();
 //    		Intent intent = new Intent();
 //   		intent.setClass(test.this,Readdata.class);    
@@ -331,7 +313,60 @@ public class test extends Activity implements OnInfoWindowClickListener{
             @Override
             public void onClick(View v) {
             	Intent intent = new Intent();
-    	   		intent.setClass(test.this, ListView2.class);
+            	//marker.getTitle
+	            	if(marker.getTitle().toString().contains("北投區"))
+				{
+	            		intent.setClass(test.this, beitou.class);
+				}
+				else if(marker.getTitle().toString().contains("中正區"))
+				{
+					intent.setClass(test.this, zhongzheng.class);
+				}
+				else if(marker.getTitle().toString().contains("大同區"))
+				{
+					intent.setClass(test.this, datong.class);
+				}
+				else if(marker.getTitle().toString().contains("中山區"))
+				{
+					intent.setClass(test.this, zhongshan.class);
+				}
+				else if(marker.getTitle().toString().contains("松山區"))
+				{
+					intent.setClass(test.this, songshan.class);
+				}
+				else if(marker.getTitle().toString().contains("大安區"))
+				{
+					intent.setClass(test.this, daan.class);
+				}
+				else if(marker.getTitle().toString().contains("萬華區"))
+				{
+					intent.setClass(test.this, wanhua.class);
+				}
+				else if(marker.getTitle().toString().contains("信義區"))
+				{
+					intent.setClass(test.this, xinyi.class);
+				}
+				else if(marker.getTitle().toString().contains("士林區"))
+				{
+					intent.setClass(test.this, shihlin.class);
+				}
+				else if(marker.getTitle().toString().contains("北投區"))
+				{
+					intent.setClass(test.this, beitou.class);
+				}
+				else if(marker.getTitle().toString().contains("內湖區"))
+				{
+					intent.setClass(test.this, neihu.class);
+				}
+				else if(marker.getTitle().toString().contains("南港區"))
+				{
+					intent.setClass(test.this, southzone.class);
+				}
+				else if(marker.getTitle().toString().contains("文山區"))
+				{
+					intent.setClass(test.this, wenmountain.class);
+				}
+//            	
     	   		startActivity(intent);
             }         
         });
