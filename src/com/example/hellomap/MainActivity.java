@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 package com.example.hellomap;
+import hidefunction.ListView1;
+
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -56,7 +58,7 @@ public class	 MainActivity extends Activity {
 	private TextView textView;
     private Button button01;
     private Button button02;
-    private Button button03;
+    //private Button button03;
     private SeekBar seekBar;
     private EditText searchlocation;
     public static String coords;
@@ -67,42 +69,43 @@ public class	 MainActivity extends Activity {
 
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.copymain);       
+        setContentView(R.layout.mainactivity);       
 
         button01 = (Button)findViewById(R.id.Button01);
         button02 = (Button)findViewById(R.id.Button02);
-        button03 = (Button)findViewById(R.id.Button03);
+        //button03 = (Button)findViewById(R.id.Button03);
         
         
         textView = (TextView)findViewById(R.id.textView1);
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
-
-        seekBar.setMax(21);//设置最大刻度
-
-        seekBar.setProgress(15);//设置当前刻度
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-
-        @Override
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-
-        	if (fromTouch)
-            {
-        			//mCurrentValue = value + mMinValue;
-                textView.setText(Integer.toString(progress));
-            }
-        	
-        }
-
-        @Override
-        public void onStartTrackingTouch(SeekBar seekBar) {	//begin 拖
-            Log.v("onStartTrackingTouch()", String.valueOf(seekBar.getProgress()));
-            }
-
-        @Override
-        public void onStopTrackingTouch(SeekBar seekBar) {//结拖
-                Log.v("onStopTrackingTouch()", String.valueOf(seekBar.getProgress()));
-            }
-        });
+        //取消搜尋範圍
+//        seekBar = (SeekBar) findViewById(R.id.seekBar);
+//
+//        seekBar.setMax(21);//设置最大刻度
+//
+//        seekBar.setProgress(15);//设置当前刻度
+//        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//
+//        @Override
+//        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+//
+//        	if (fromTouch)
+//            {
+//        			//mCurrentValue = value + mMinValue;
+//                textView.setText(Integer.toString(progress));
+//            }
+//        	
+//        }
+//
+//        @Override
+//        public void onStartTrackingTouch(SeekBar seekBar) {	//begin 拖
+//            Log.v("onStartTrackingTouch()", String.valueOf(seekBar.getProgress()));
+//            }
+//
+//        @Override
+//        public void onStopTrackingTouch(SeekBar seekBar) {//结拖
+//                Log.v("onStopTrackingTouch()", String.valueOf(seekBar.getProgress()));
+//            }
+//        });
         
 
         button01.setOnClickListener(new Button.OnClickListener(){ 
@@ -122,7 +125,7 @@ public class	 MainActivity extends Activity {
             	   		intent.setClass(MainActivity.this, test.class);
                    //new一個Bundle物件，並將要傳遞的資料傳入
                    Bundle bundle = new Bundle();
-                   bundle.putInt("Zoom",seekBar.getProgress());
+                   //bundle.putInt("Zoom",seekBar.getProgress());
                    //bundle.putString("Searchlocation",coords);
                    //將Bundle物件assign給intent
                    intent.putExtras(bundle);
@@ -144,15 +147,15 @@ public class	 MainActivity extends Activity {
             }         
         });
         
-        button03.setOnClickListener(new Button.OnClickListener(){ 
-            @Override
-            public void onClick(View v) {
-            	
-            	Intent intent = new Intent();
-    	   		intent.setClass(MainActivity.this, ListView1.class);
-    	   		startActivity(intent);
-            }         
-        });
+//        button03.setOnClickListener(new Button.OnClickListener(){ 
+//            @Override
+//            public void onClick(View v) {
+//            	
+//            	Intent intent = new Intent();
+//    	   		intent.setClass(MainActivity.this, ListView1.class);
+//    	   		startActivity(intent);
+//            }         
+//        });
         
     }
     
@@ -168,7 +171,7 @@ public class	 MainActivity extends Activity {
                 // Getting a maximum of 3 Address that matches the input text
                 addresses = geocoder.getFromLocationName(locationName[0], 3);
                 coords = String.valueOf(addresses.get(0).getLatitude()) + "," + String.valueOf(addresses.get(0).getLongitude());
-                Log.i("hanjord debug", "location :"+String.valueOf(coords));
+                //Log.i("hanjord debug", "location :"+String.valueOf(coords));
                 
             } catch (IOException e) {
                 e.printStackTrace();
